@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sqwerix — sqwerix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА --- */
+        :root {
+            --bg: #F9F7F2;
+            --text: #2D2A26;
+            --primary: #2A4B3C;
+            --accent: #C5A059;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        /* --- ШАПКА (HEADER) --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(249, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { text-decoration: none; color: var(--text); font-weight: 400; font-size: 0.95rem; transition: color 0.3s; }
+        nav a:hover { color: var(--accent); }
+        
+        .burger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .burger span { width: 25px; height: 2px; background: var(--primary); transition: 0.3s; }
+
+        /* --- ГЛАВНЫЙ ЭКРАН (HERO) --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(42, 75, 60, 0.4), rgba(42, 75, 60, 0.6)), 
+                        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: var(--white); padding: 0 1rem;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; font-weight: 300; }
+        
+        .btn {
+            display: inline-block; padding: 1rem 2.5rem;
+            background: var(--accent); color: var(--white);
+            text-decoration: none; font-weight: 600; letter-spacing: 1px;
+            border-radius: 2px; transition: all 0.3s; text-transform: uppercase; font-size: 0.9rem;
+        }
+        .btn:hover { background: #b38f4d; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        /* --- СЕКЦИИ --- */
+        section { padding: 6rem 10%; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .section-title p { color: #777; font-style: italic; }
+
+        /* --- МЕНЮ --- */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .menu-card {
+            background: var(--white); border-radius: 8px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s;
+        }
+        .menu-card:hover { transform: translateY(-10px); }
+        .menu-card img { width: 100%; height: 250px; object-fit: cover; }
+        .menu-card-body { padding: 1.5rem; }
+        .menu-card h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.4rem; }
+        .menu-card p { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+        .price { font-weight: 600; color: var(--accent); font-size: 1.2rem; }
+
+        /* --- О НАС / КОНТАКТЫ --- */
+        .about { background: var(--primary); color: var(--white); text-align: center; }
+        .about h2 { color: var(--white); }
+        .about p { max-width: 800px; margin: 0 auto 2rem; font-weight: 300; font-size: 1.1rem; }
+
+        /* --- ФУТЕР --- */
+        footer { background: #1a1a1a; color: #aaa; text-align: center; padding: 2rem; font-size: 0.9rem; }
+
+        /* --- АДАПТИВНОСТЬ (МОБИЛЬНЫЕ) --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            section { padding: 4rem 5%; }
+            
+            nav ul {
+                position: fixed; top: 70px; right: -100%; width: 100%; height: calc(100vh - 70px);
+                background: var(--bg); flex-direction: column; align-items: center; justify-content: center;
+                transition: right 0.3s;
+            }
+            nav ul.active { right: 0; }
+            .burger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <header>
+        <a href="#" class="logo">sq<span>werix</span></a>
+        <nav>
+            <ul id="menu">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#menu-section">Меню</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section class="hero" id="home">
+        <h1>Искусство вкуса</h1>
+        <p>Авторская кухня, уютная атмосфера и безупречный сервис в самом сердце города. Откройте для себя новые гастрономические горизонты.</p>
+        <a href="#contact" class="btn">Забронировать столик</a>
+    </section>
+
+    <!-- ПОПУЛЯРНЫЕ БЛЮДА -->
+    <section id="menu-section">
+        <div class="section-title">
+            <h2>Наши хиты</h2>
+            <p>Блюда, которые покорили сердца наших гостей</p>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-card">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Салат">
+                <div class="menu-card-body">
+                    <h3>1111111</h3>
+                    <p>1111111</p>
+                    <span class="price">если не жалко ₽</span>
+                </div>
+            </div>
+            <div class="menu-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Паста">
+                <div class="menu-card-body">
+                    <h3>222222</h3>
+                    <p>222222</p>
+                    <span class="price">сколько есть ₽</span>
+                </div>
+            </div>
+            <div class="menu-card">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80" alt="Десерт">
+                <div class="menu-card-body">
+                    <h3>3333333</h3>
+                    <p>33333333</p>
+                    <span class="price">сколько не жалко ₽</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О НАС -->
+    <section class="about" id="about">
+        <div class="section-title">
+            <h2>Наша философия</h2>
+        </div>
+        <p>Мы верим, что еда — это не просто утоление голода, это путешествие. Наш шеф-повар ежедневно создает блюда, вдохновленные классическими рецептами и современными техниками, используя только сезонные и фермерские продукты.</p>
+        <a href="#menu-section" class="btn">Посмотреть полное меню</a>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section id="contact">
+        <div class="section-title">
+            <h2>Ждем вас в гости</h2>
+            <p>Забронируйте столик или просто загляните на чашечку кофе</p>
+        </div>
+        <div style="text-align: center; font-size: 1.1rem;">
+            <p><strong>Адрес:</strong> существует</p>
+            <p><strong>Телефон:</strong> крутой</p>
+            <p><strong>Время работы:</strong> когда как</p>
+            <br>
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <p>&copy; 2026 sqwerix. Все права защищены.</p>
+    </footer>
+
+    <!-- СКРИПТ ДЛЯ МОБИЛЬНОГО МЕНЮ -->
+    <script>
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+        
+        burger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
